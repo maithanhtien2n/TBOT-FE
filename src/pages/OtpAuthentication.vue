@@ -3,6 +3,7 @@ import { StoreApp } from "@/services/stores";
 import { reactive, ref, watch } from "vue";
 import { isValidEmail } from "@/utils";
 import { useRouter } from "vue-router";
+import TheFooter from "@/TheFooter.vue";
 
 const ROUTER = useRouter();
 
@@ -137,4 +138,6 @@ watch(
       />
     </div>
   </div>
+
+  <TheFooter />
 </template>

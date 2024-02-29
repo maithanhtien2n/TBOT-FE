@@ -25,7 +25,11 @@ const isShowFooter = computed(
 
 <template>
   <div
-    v-if="isMobileScreen && !isShowFooter"
+    v-if="
+      isMobileScreen &&
+      !isShowFooter &&
+      !['Login', 'Register', 'OtpAuthentication'].includes(ROUTE.name)
+    "
     style="z-index: 9999 !important"
     class="bg-green-light fixed bottom-0 left-0 right-0 p-3 flex align-items-center justify-content-between"
   >
@@ -49,7 +53,10 @@ const isShowFooter = computed(
   >
     Copyright © 2024 developed by tien thanh
   </div>
-  <div v-if="!['Login', 'Register'].includes(ROUTE.name)" class="w-full py-3" />
+  <div
+    v-if="!['Login', 'Register', 'OtpAuthentication'].includes(ROUTE.name)"
+    class="w-full py-3"
+  />
 </template>
 
 <style scoped>
