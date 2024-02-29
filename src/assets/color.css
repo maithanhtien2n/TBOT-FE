@@ -1,0 +1,49 @@
+:root {
+  --mainColor: #10b981;
+  --blueLight: #f0f2f5;
+  --greenLight: #adf8d1;
+}
+
+.bg-main-left {
+  background-image: linear-gradient(to left, #f0f0f0, var(--greenLight));
+}
+
+.bg-main-right {
+  background-image: linear-gradient(to right, #f0f0f0, var(--greenLight));
+}
+
+.bg-main-top {
+  background-image: linear-gradient(to top, #f0f0f0, var(--greenLight));
+}
+
+.bg-main-bottom {
+  background-image: linear-gradient(to bottom, #f0f0f0, var(--greenLight));
+}
+
+.bg-main-color {
+  background-color: var(--mainColor);
+}
+
+.bg-green-light {
+  background-color: var(--mainColor);
+}
+
+.bg-main-color-opacity {
+  background-color: #4caf4fbe;
+}
+
+.text-main-color {
+  color: var(--mainColor);
+}
+
+.bg-light-blue {
+  background-color: var(--blueLight);
+}
+
+.text-light-blue {
+  color: var(--blueLight);
+}
+
+.text-white {
+  color: #fff;
+}

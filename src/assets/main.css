@@ -1,0 +1,237 @@
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&family=Oswald&family=Questrial&family=Roboto:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oswald&family=Roboto:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&family=Oswald&family=Roboto:wght@300&display=swap");
+
+@import "color.css";
+
+* {
+  font-size: 1rem;
+  font-family: "Questrial", sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  -moz-tap-highlight-color: transparent;
+  -ms-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #fff !important;
+}
+
+.container-app {
+  width: 1300px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.text-custom-mini {
+  font-size: 0.8rem;
+}
+
+.text-custom-1 {
+  font-size: 1.2rem;
+}
+
+.text-custom-2 {
+  font-size: 1.2rem;
+}
+
+.object-fit-cover {
+  object-fit: cover;
+}
+
+.on-click,
+.on-click-1,
+.on-click-2,
+.on-click-3 {
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.on-click:active {
+  opacity: 0.8;
+}
+
+.on-click-1:active {
+  color: var(--mainColor);
+}
+
+.on-click-2 {
+  transition: all 0.2s ease;
+}
+
+.on-click-2:hover {
+  background-color: #a8a8a877;
+}
+
+.on-click-3 {
+  transition: all 0.1s ease;
+}
+
+.on-click-3:active {
+  transform: scale(1.1);
+}
+
+.avatar {
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: rgba(0, 0, 0, 0.11) 0px 0px 0px 1px;
+}
+
+.box-shadow {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px !important;
+}
+
+.box-shadow-1 {
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
+.box-shadow-2 {
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px !important;
+}
+
+.card {
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.02), 0px 0px 2px rgba(0, 0, 0, 0.05),
+    0px 1px 4px rgba(0, 0, 0, 0.08) !important;
+}
+
+.card-bg {
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: #10b98138;
+}
+
+.card-bg-mini {
+  padding: 0.5rem;
+  border-radius: 1rem;
+  background-color: rgba(0, 255, 98, 0.11);
+}
+
+.btn {
+  padding: 1rem;
+  border-radius: 50rem;
+  outline: none;
+  border: none;
+  border: 1px solid #ddd;
+}
+
+.chat-container {
+  max-width: 50rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.unselectable {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.count {
+  width: 1rem;
+  height: 1rem;
+  background-color: #e41e3f;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  color: #fff;
+  top: -0.1rem;
+  right: -0.1rem;
+  font-size: 0.6rem;
+}
+
+p img {
+  max-width: 13rem;
+  margin: 1rem 0;
+}
+
+/* Dài quá thì tối đa 2 dòng và có ... */
+.fixed-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: normal;
+  white-space: pre-line;
+  word-break: break-word;
+}
+
+.fixed-text-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: normal;
+  white-space: pre-line;
+  word-break: break-word;
+  /* white-space: nowrap; */
+}
+
+/* Ghi đề primevue */
+.p-sidebar .p-sidebar-content {
+  padding: 0rem !important;
+}
+
+.p-inputtext {
+  padding: 0.75rem;
+}
+
+.p-button {
+  padding: 0.75rem 1rem;
+}
+
+.p-tabview .p-tabview-panels {
+  padding: 1rem 0;
+}
+
+.p-dialog {
+  width: 20rem;
+}
+
+/* .p-timeline-event-content {
+  flex: 0;
+} */
+
+.p-timeline-event-opposite {
+  flex: 0 !important;
+  padding: 0 0rem;
+}
+
+@media only screen and (max-width: 1335px) {
+  .container-app {
+    width: 95% !important;
+    position: relative;
+  }
+}
+
+@media only screen and (max-width: 750px) {
+  .container-app {
+    width: 100% !important;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .avatar {
+    width: 2.7rem;
+    height: 2.7rem;
+  }
+
+  p img {
+    max-width: 10rem;
+    margin: 1rem 0;
+  }
+}
