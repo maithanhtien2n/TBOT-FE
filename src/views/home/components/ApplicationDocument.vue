@@ -24,7 +24,7 @@ const props = defineProps({
     <div class="flex flex-column gap-2">
       <span>Tài liệu cụ thể:</span>
 
-      <div v-html="value?.content" />
+      <div v-html="value?.content" class="line-height-3" />
     </div>
   </div>
 

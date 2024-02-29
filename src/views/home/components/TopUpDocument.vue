@@ -5,5 +5,5 @@ const props = defineProps({
 </script>
 
 <template>
-  <div v-html="value" />
+  <div v-html="value" class="line-height-3" />
 </template>
