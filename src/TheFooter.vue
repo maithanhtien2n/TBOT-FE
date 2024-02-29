@@ -16,7 +16,11 @@ const notificationLength = computed(
   () => onGetterListNotification.value.newNotification
 );
 
-const isShowFooter = computed(() => ROUTE.fullPath.split("/").includes("app"));
+const isShowFooter = computed(
+  () =>
+    ROUTE.fullPath.split("/").includes("app") &&
+    +ROUTE.fullPath.split("/").length > 3
+);
 </script>
 
 <template>
