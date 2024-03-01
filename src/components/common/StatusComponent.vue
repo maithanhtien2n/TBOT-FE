@@ -22,6 +22,11 @@ const defineStatuses = [
     label: "Tạm ngưng",
     color: "red",
   },
+  {
+    code: "NO_AUTH",
+    label: "Chưa xác thực",
+    color: "blue",
+  },
 ];
 
 const props = defineProps({

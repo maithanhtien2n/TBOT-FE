@@ -182,6 +182,10 @@ p img {
 }
 
 /* Ghi đề primevue */
+.p-error {
+  font-size: 0.8rem;
+}
+
 .p-sidebar .p-sidebar-content {
   padding: 0rem !important;
 }

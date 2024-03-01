@@ -1,7 +1,7 @@
 <script setup>
 import * as Yup from "yup";
 import { useRouter } from "vue-router";
-import { watch, onMounted, reactive } from "vue";
+import { watch, onMounted, reactive, ref } from "vue";
 import { onRenderStringBase64, accountId, isMobileScreen } from "@/utils";
 import { STORE_APPLICATION } from "@/services/stores";
 import { useForm, useField, useFieldArray } from "vee-validate";
@@ -21,6 +21,8 @@ const formData = reactive({
   instructions: null,
   files: [],
 });
+
+const fileError = ref("");
 
 const schema = Yup.object({
   name: Yup.string().required("Vui lòng nhập tên trợ lý"),
@@ -43,6 +45,17 @@ const { value: instructions, errorMessage: errInstructions } =
 const { push, remove } = useFieldArray("files");
 
 const onUploadFile = async (event) => {
+  const fileType = ["txt", "csv", "xlsx"];
+  if (!fileType.includes(event.target.files[0].name.split(".").pop())) {
+    fileError.value = `Chỉ hỗ trợ tệp có đuôi: ${fileType.join(", ")}`;
+    return;
+  }
+
+  if (+event.target.files[0].size > 3145728) {
+    fileError.value = "Kích thước tệp không được vượt quá 3MB";
+    return;
+  }
+
   const file = await onRenderStringBase64(event.target.files[0]);
   push(file);
 
@@ -63,6 +76,8 @@ const onClickRemoveFile = (index) => {
 };
 
 const onSubmit = handleSubmit(async () => {
+  fileError.value = "";
+
   const res = await onActionSaveVirtualAssistant(infoData);
   if (res.success) {
     onActionGetVirtualAssistant(true);
@@ -131,6 +146,10 @@ onMounted(() => {
               @change="onUploadFile"
             />
           </div>
+
+          <small v-show="fileError" class="p-error">
+            {{ fileError }}
+          </small>
         </div>
 
         <div class="flex flex-column gap-2">

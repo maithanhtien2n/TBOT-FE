@@ -41,14 +41,8 @@ export const StoreAccountAdmin = defineStore("StoreAccountAdmin", () => {
     return res;
   };
 
-  const onActionGetBankAccountDetail = async (params, noLoading) => {
-    const res = await onResponse(API.getBankAccountDetail(params, noLoading));
-    bankAccountInfo.value = res.data;
-    return res;
-  };
-
-  const onActionSaveBankAccount = async (args) => {
-    const res = await onResponse(API.saveBankAccount(args), true);
+  const onActionDeleteAccount = async (params) => {
+    const res = await onResponse(API.deleteAccount(params), true);
     return res;
   };
 
@@ -63,7 +57,6 @@ export const StoreAccountAdmin = defineStore("StoreAccountAdmin", () => {
     onActionGetUserInfo,
     onActionUpdateMoneyBalanceUser,
     onActionUpdateStatusUser,
-    onActionGetBankAccountDetail,
-    onActionSaveBankAccount,
+    onActionDeleteAccount,
   };
 });

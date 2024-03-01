@@ -34,19 +34,11 @@ class ApiAccountAdmin {
     });
   };
 
-  getBankAccountDetail = async (params, noLoading = false) => {
+  deleteAccount = async (ids) => {
     return await AxiosInstance({
-      method: "GET",
-      url: `bank-account/${params}`,
-      noLoading,
-    });
-  };
-
-  saveBankAccount = async (args) => {
-    return await AxiosInstance({
-      method: "PUT",
-      url: `bank-account`,
-      data: args,
+      method: "DELETE",
+      url: `user`,
+      params: { ids: [...ids] },
     });
   };
 }

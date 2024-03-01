@@ -42,7 +42,10 @@ const { value: applicationContent, errorMessage: errApplicationContent } =
 const { value: topUp, errorMessage: errTopUp } = useField("topUp");
 
 const onSubmit = handleSubmit(async () => {
-  onActionSaveDocument(infoData);
+  const res = await onActionSaveDocument(infoData);
+  if (res.success) {
+    onActionGetDocument(true);
+  }
 });
 
 watch(onGetterDocument, (newValue) => {
@@ -72,7 +75,7 @@ onMounted(() => {
         />
 
         <div class="flex flex-column gap-1">
-          <Editor v-model="applicationContent" editorStyle="height: 235px" />
+          <Editor v-model="applicationContent" editorStyle="height: 215px" />
           <small v-show="errApplicationContent" class="p-error">
             {{ errApplicationContent }}
           </small>
@@ -88,7 +91,7 @@ onMounted(() => {
         </div>
 
         <div class="flex flex-column gap-1">
-          <Editor v-model="topUp" editorStyle="height: 290px" />
+          <Editor v-model="topUp" editorStyle="height: 273px" />
           <small v-show="errTopUp" class="p-error">
             {{ errTopUp }}
           </small>

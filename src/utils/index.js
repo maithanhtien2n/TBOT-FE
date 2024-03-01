@@ -169,8 +169,14 @@ const onRenderStringBase64 = (file) => {
     reader.readAsDataURL(file);
 
     reader.onload = () => {
+      const fileNameWithoutSpaces = file.name.split(" ").join("-");
+      const fileNameLowercaseWithoutAccents = fileNameWithoutSpaces
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+
       const fileBase64 = {
-        name: file.name.split(" ").join("-"),
+        name: fileNameLowercaseWithoutAccents,
         base64: reader.result.split(",")[1],
       };
       resolve(fileBase64);

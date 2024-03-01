@@ -1,6 +1,6 @@
 <script setup>
 import { ToastService } from "@/utils/toast";
-import { formatToVND, socket } from "@/utils";
+import { formatToVND, socket, formatDate } from "@/utils";
 import { useConfirm } from "primevue/useconfirm";
 import { STORE_ACCOUNT_ADMIN } from "@/services/stores";
 import IconTitle from "@/components/common/IconTitle.vue";
@@ -14,6 +14,7 @@ const {
   onActionGetListUser,
   onActionUpdateMoneyBalanceUser,
   onActionUpdateStatusUser,
+  onActionDeleteAccount,
 } = STORE_ACCOUNT_ADMIN.StoreAccountAdmin();
 
 const tabMenu = [
@@ -28,6 +29,10 @@ const tabMenu = [
   {
     name: "Đã khóa",
     code: "LOCKED",
+  },
+  {
+    name: "Chưa xác thực",
+    code: "NO_AUTH",
   },
 ];
 
@@ -53,6 +58,8 @@ const accounts = computed(() => {
       return listUser.value.active;
     case 2:
       return listUser.value.locked;
+    case 3:
+      return listUser.value.noAuth;
     default:
       return listUser.value.all;
   }
@@ -85,12 +92,14 @@ const onTabChange = () => {
 };
 
 const onSearch = (tab, keySearch) => {
-  onActionGetListUser({ tab, keySearch });
+  if (keySearch) onActionGetListUser({ tab, keySearch });
 };
 
 const onClickConfirm = (status, message, type, { tab, keySearch }) => {
   if (
-    onMapTableSelection("status").includes(type === "TOPUP" ? "LOCKED" : type)
+    onMapTableSelection("status").includes(
+      ["TOPUP", "DELETE"].includes(type) ? "LOCKED" : type
+    )
   ) {
     TOAST.error("Vui lòng chỉ chọn dòng dữ liệu có trạng thái: " + status);
     return;
@@ -100,7 +109,7 @@ const onClickConfirm = (status, message, type, { tab, keySearch }) => {
     message: `Bạn muốn ${message} tài khoản?`,
     header: type === "TOPUP" ? "Nhập số tiền cần nạp" : "Xác nhận",
     acceptLabel: type === "TOPUP" ? "Nạp tiền" : "Đồng ý",
-    acceptClass: type === "LOCKED" ? "p-button-danger" : "",
+    acceptClass: ["LOCKED", "DELETE"].includes(type) ? "p-button-danger" : "",
     rejectLabel: "Hủy bỏ",
     rejectClass: "p-button-outlined",
     type,
@@ -118,15 +127,20 @@ const onClickConfirm = (status, message, type, { tab, keySearch }) => {
           data.topUpNumber = null;
           data.tableSelection = [];
         }
+      } else if (type === "DELETE") {
+        const res = await onActionDeleteAccount(onMapTableSelection("_id"));
+        if (res.success) {
+          await onActionGetListUser({ tab, keySearch }, true);
+          data.tableSelection = [];
+        }
       } else {
         const res = await onActionUpdateStatusUser({
           ids: onMapTableSelection("_id"),
           status: type,
         });
-
         if (res.success) {
+          await onActionGetListUser({ tab, keySearch }, true);
           data.tableSelection = [];
-          onActionGetListUser({ tab, keySearch }, true);
         }
       }
     },
@@ -170,7 +184,7 @@ onMounted(() => {
             <div class="flex flex-wrap gap-2 justify-content-between">
               <div class="flex gap-2">
                 <Button
-                  v-show="tab.code !== 'ACTIVE'"
+                  v-show="tab.code !== 'ACTIVE' && tab.code !== 'NO_AUTH'"
                   label="Mở khóa"
                   :disabled="onDisableButton('LOCKED')"
                   @click="
@@ -181,7 +195,7 @@ onMounted(() => {
                   "
                 />
                 <Button
-                  v-show="tab.code !== 'LOCKED'"
+                  v-show="tab.code !== 'LOCKED' && tab.code !== 'NO_AUTH'"
                   label="Khóa"
                   class="p-button-danger"
                   :disabled="onDisableButton('ACTIVE')"
@@ -193,12 +207,24 @@ onMounted(() => {
                   "
                 />
                 <Button
-                  v-show="tab.code !== 'LOCKED'"
+                  v-show="tab.code !== 'LOCKED' && tab.code !== 'NO_AUTH'"
                   label="Nạp tiền"
                   severity="secondary"
                   :disabled="onDisableButton('ACTIVE')"
                   @click="
                     onClickConfirm('hoạt động', 'nạp tiền', 'TOPUP', {
+                      tab: tab.code,
+                      keySearch: data.body.keySearch,
+                    })
+                  "
+                />
+                <Button
+                  v-show="tab.code === 'NO_AUTH'"
+                  label="Xóa tài khoản"
+                  class="p-button-danger"
+                  :disabled="onDisableButton('NO_AUTH')"
+                  @click="
+                    onClickConfirm('hoạt động', 'xóa', 'DELETE', {
                       tab: tab.code,
                       keySearch: data.body.keySearch,
                     })
@@ -239,6 +265,7 @@ onMounted(() => {
             header="Ảnh đại diện"
             class="white-space-nowrap"
             style="width: 7rem"
+            :hidden="tab.code === 'NO_AUTH'"
           >
             <template #body="{ data }">
               <img
@@ -255,6 +282,7 @@ onMounted(() => {
             class="white-space-nowrap"
             style="width: 7rem"
             :sortable="true"
+            :hidden="tab.code === 'NO_AUTH'"
           />
 
           <Column
@@ -263,6 +291,7 @@ onMounted(() => {
             class="white-space-nowrap"
             style="width: 7rem"
             :sortable="true"
+            :hidden="tab.code === 'NO_AUTH'"
           />
 
           <Column
@@ -271,9 +300,45 @@ onMounted(() => {
             class="white-space-nowrap"
             style="width: 7rem"
             :sortable="true"
+            :hidden="tab.code === 'NO_AUTH'"
           >
             <template #body="{ data }">
               <span>{{ onReturnGender(data.gender) }}</span>
+            </template>
+          </Column>
+
+          <Column
+            field="otp"
+            header="Mã xác thực"
+            class="white-space-nowrap"
+            style="width: 7rem"
+            :sortable="true"
+            :hidden="tab.code !== 'NO_AUTH'"
+          />
+
+          <Column
+            field="createdAt"
+            header="Ngày đăng ký"
+            class="white-space-nowrap"
+            style="width: 7rem"
+            :sortable="true"
+            :hidden="tab.code !== 'NO_AUTH'"
+          >
+            <template #body="{ data }">
+              <span>{{ formatDate(data?.createdAt, true) }}</span>
+            </template>
+          </Column>
+
+          <Column
+            field="updatedAt"
+            header="Ngày đăng ký gần nhất"
+            class="white-space-nowrap"
+            style="width: 7rem"
+            :sortable="true"
+            :hidden="tab.code !== 'NO_AUTH'"
+          >
+            <template #body="{ data }">
+              <span>{{ formatDate(data?.updatedAt, true) }}</span>
             </template>
           </Column>
 
@@ -283,6 +348,7 @@ onMounted(() => {
             class="white-space-nowrap"
             style="width: 7rem"
             :sortable="true"
+            :hidden="tab.code === 'NO_AUTH'"
           >
             <template #body="{ data }">
               <span>{{ formatToVND(data.moneyBalance) }}</span>
