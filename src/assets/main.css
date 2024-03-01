@@ -184,6 +184,7 @@ p img {
 /* Ghi đề primevue */
 .p-error {
   font-size: 0.8rem;
+  line-height: 1.1rem;
 }
 
 .p-sidebar .p-sidebar-content {
@@ -206,13 +207,13 @@ p img {
   width: 20rem;
 }
 
-/* .p-timeline-event-content {
-  flex: 0;
-} */
-
 .p-timeline-event-opposite {
   flex: 0 !important;
   padding: 0 0rem;
+}
+
+.p-dialog .p-dialog-header .p-dialog-title {
+  font-size: 1.25rem !important;
 }
 
 @media only screen and (max-width: 1335px) {

@@ -238,6 +238,45 @@ const isValidEmail = (email) => {
   return emailRegex.test(email);
 };
 
+const isValidFormat = (input) => {
+  // Sử dụng biểu thức chính quy để kiểm tra định dạng "số, năm"
+  const regex = /^\d{1,2}, \d{4}$/;
+  if (!regex.test(input)) {
+    return "Ngày tháng chưa định dạng (tháng, năm)"; // Không đúng định dạng
+  }
+
+  // Tách số tháng và năm từ chuỗi
+  const [month, year] = input.split(", ");
+
+  // Lấy thông tin về tháng và năm hiện tại
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+  const currentMonth = currentDate.getMonth() + 1; // Lưu ý rằng tháng bắt đầu từ 0
+
+  // Kiểm tra xem số tháng và năm có lớn hơn hiện tại hay không
+  if (
+    parseInt(year, 10) > currentYear ||
+    (parseInt(year, 10) === currentYear && parseInt(month, 10) > currentMonth)
+  ) {
+    return "Ngày tháng không được lớn hơn thời điểm hiện tại";
+  }
+
+  return ""; // Đúng định dạng và giá trị hợp lệ
+};
+
+const getCurrentMonthYear = () => {
+  const currentDate = new Date();
+
+  // Lấy tháng và năm hiện tại
+  const currentMonth = currentDate.getMonth() + 1; // Tháng bắt đầu từ 0
+  const currentYear = currentDate.getFullYear();
+
+  // Định dạng theo "tháng, năm"
+  const formattedDate = `${currentMonth}, ${currentYear}`;
+
+  return formattedDate;
+};
+
 export {
   isEmpty,
   onCopyText,
@@ -246,6 +285,7 @@ export {
   formatToVND,
   isValidEmail,
   isValidBase64,
+  isValidFormat,
   convertNewline,
   onValidPassword,
   onEncryptedData,
@@ -253,6 +293,7 @@ export {
   formatDateToDDMMYY,
   onValidAccountName,
   isValidPhoneNumber,
+  getCurrentMonthYear,
   stringWithoutAccents,
   onRenderStringBase64,
   onDeleteAppLocalStorage,

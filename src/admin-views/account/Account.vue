@@ -377,7 +377,7 @@ onMounted(() => {
     </TabView>
   </div>
 
-  <ConfirmDialog class="line-height-3">
+  <ConfirmDialog>
     <template #message="slotProps">
       <InputNumber
         v-if="slotProps.message.type === 'TOPUP'"
