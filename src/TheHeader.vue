@@ -182,7 +182,7 @@ const onClickLogOut = () => {
             class="text-2xl font-bold text-600 on-click"
             @click="ROUTER.push({ name: 'Home' })"
           >
-            T B O T A I
+            T B O T
           </div>
         </div>
 

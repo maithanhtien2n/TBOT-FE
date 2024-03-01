@@ -67,7 +67,7 @@ const onClickMenuItem = (routeName) => {
               class="text-main-color on-click flex gap-1"
               @click="ROUTER.push({ name: 'HomeAdmin' })"
             >
-              <span class="text-2xl font-bold">T B O T A I</span>
+              <span class="text-2xl font-bold">T B O T</span>
               <span class="text-right text-custom-mini">Admin</span>
             </div>
           </div>
