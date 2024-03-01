@@ -3,16 +3,15 @@ import * as Yup from "yup";
 import { useForm } from "vee-validate";
 import { STORE_PERSONAL } from "@/services/stores";
 import IconTitle from "@/components/common/IconTitle.vue";
-import { computed, onMounted, reactive, watch } from "vue";
+import { onMounted, reactive, watch } from "vue";
 import ImageValidate from "@/components/validation/ImageValidate.vue";
 import DropdownValidate from "@/components/validation/DropdownValidate.vue";
 import InputTextValidate from "@/components/validation/InputTextValidate.vue";
 import {
-  userData,
   appLocalStorage,
   onEncryptedData,
   isValidPhoneNumber,
-  formatDateToDDMMYY,
+  isValidDateOfBirth,
 } from "@/utils";
 
 const {
@@ -29,12 +28,16 @@ const formData = reactive({
   phoneNumber: null,
 });
 
-const userId = computed(() => userData.value._id);
-
 const schema = Yup.object({
   fullName: Yup.string().required("Vui lòng nhập họ và tên"),
   gender: Yup.string().required("Vui lòng chọn giới tính"),
-  dateOfBirth: Yup.string().required("Vui lòng nhập ngày sinh"),
+  dateOfBirth: Yup.string()
+    .test(
+      "dateOfBirth",
+      "Vui lòng nhập đúng định dạng ngày sinh (DD/MM/YY)",
+      (v) => isValidDateOfBirth(v)
+    )
+    .required("Vui lòng nhập ngày sinh"),
   phoneNumber: Yup.string()
     .test(
       "phoneNumber",
@@ -79,10 +82,6 @@ const onUpdateUserInfo = (newValue) => {
       name: user?.avatar.split("$")[1],
       base64: user?.avatar,
     });
-  }
-
-  if (user?.dateOfBirth) {
-    setFieldValue("dateOfBirth", formatDateToDDMMYY(user?.dateOfBirth));
   }
 };
 

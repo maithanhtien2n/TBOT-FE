@@ -127,23 +127,14 @@ const formatDate = (dateString, showTime = false) => {
   return showTime ? `${formattedDate} ${formattedTime}` : formattedDate;
 };
 
-const formatDateToDDMMYY = (date) => {
-  // Kiểm tra nếu 'date' không phải là đối tượng Date
-  if (!(date instanceof Date)) {
-    date = new Date(date);
-  }
+const formatDateToDDMMYY = (timestamp) => {
+  const date = new Date(timestamp);
 
-  // Lấy thông tin ngày, tháng, năm
-  var day = date.getDate();
-  var month = date.getMonth() + 1; // Tháng trong JavaScript bắt đầu từ 0
-  var year = date.getFullYear();
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Lưu ý rằng tháng bắt đầu từ 0
+  const year = String(date.getFullYear());
 
-  // Chuyển đổi số thành chuỗi và thêm '0' đằng trước nếu cần
-  day = day < 10 ? "0" + day : day;
-  month = month < 10 ? "0" + month : month;
-
-  // Trả về chuỗi định dạng "dd-mm-yyyy"
-  return day + "-" + month + "-" + year;
+  return `${day}/${month}/${year}`;
 };
 
 const formatToVND = (amount) => {
@@ -277,6 +268,37 @@ const getCurrentMonthYear = () => {
   return formattedDate;
 };
 
+const isValidDateOfBirth = (input) => {
+  // Sử dụng biểu thức chính quy để kiểm tra định dạng "dd/mm/yyyy"
+  const regex = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
+
+  // Kiểm tra xem chuỗi đầu vào có khớp với biểu thức chính quy không
+  const match = input.match(regex);
+
+  if (!match) {
+    return false; // Không đúng định dạng
+  }
+
+  // Lấy các giá trị từ match
+  const day = parseInt(match[1], 10);
+  const month = parseInt(match[2], 10);
+  const year = parseInt(match[3], 10);
+
+  // Kiểm tra xem ngày, tháng, năm có hợp lệ không
+  const isValidDate =
+    !isNaN(day) &&
+    !isNaN(month) &&
+    !isNaN(year) &&
+    day >= 1 &&
+    day <= 31 &&
+    month >= 1 &&
+    month <= 12 &&
+    year >= 1900 &&
+    year <= new Date().getFullYear();
+
+  return isValidDate;
+};
+
 export {
   isEmpty,
   onCopyText,
@@ -292,6 +314,7 @@ export {
   formatNumberIntl,
   formatDateToDDMMYY,
   onValidAccountName,
+  isValidDateOfBirth,
   isValidPhoneNumber,
   getCurrentMonthYear,
   stringWithoutAccents,
