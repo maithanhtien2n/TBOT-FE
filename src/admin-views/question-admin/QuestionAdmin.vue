@@ -162,7 +162,7 @@ onMounted(() => {
               <UserCard
                 :value="{
                   avatar: data?.question?.avatar || '/images/avatar.jpg',
-                  fullName: data?.question?.fullName,
+                  fullName: data?.question?.fullName || data?.question?.email,
                   sentDate: data?.question?.sentDate,
                   content: data?.question?.content,
                 }"
