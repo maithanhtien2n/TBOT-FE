@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from "vue";
+import { isMobileScreen } from "@/utils";
 
 const props = defineProps({
   name: { type: String, required: false, default: "" },
@@ -47,7 +48,11 @@ const userChatInfo = computed(() => {
     </div>
 
     <div v-if="typeof content === 'string'" class="mt-2">
-      <audio controls v-if="content.split('$')[1] === 'speech.mp3'">
+      <audio
+        controls
+        v-if="content.split('$')[1] === 'speech.mp3'"
+        :style="{ width: `${isMobileScreen ? '100%' : '70%'}` }"
+      >
         <source :src="content" type="audio/mp3" />
         Your browser does not support the audio element.
       </audio>
