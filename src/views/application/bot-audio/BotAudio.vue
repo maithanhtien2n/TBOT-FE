@@ -116,7 +116,7 @@ onMounted(async () => {});
             v-model="inputMessage"
             type="text"
             class="w-full border-none outline-none"
-            placeholder="Hãy mô tả bức tranh của bạn?"
+            placeholder="Nhập văn bản cần chuyển đổi?"
             @keypress.enter="onSendMessage"
           />
 
