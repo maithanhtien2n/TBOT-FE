@@ -17,7 +17,7 @@ const props = defineProps({
     :class="[
       `${
         isMobileScreen ? 'p-2' : 'p-3'
-      } inline-flex flex-column align-items-center gap-2 card-bg border-round-lg on-click`,
+      } inline-flex flex-column align-items-center gap-2 card-bg border-round-lg on-click  px-2 py-3`,
     ]"
     @click="ROUTER.push({ name: 'BotVersatile', params: { id } })"
   >
@@ -26,6 +26,6 @@ const props = defineProps({
       alt="Lỗi ảnh"
       class="w-3rem h-3rem object-fit-cover border-circle"
     />
-    <span>{{ name }}</span>
+    <span style="font-size: 0.9rem" class="text-center">{{ name }}</span>
   </div>
 </template>

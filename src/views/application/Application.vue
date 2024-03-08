@@ -32,7 +32,7 @@ onMounted(() => {
         :class="[
           `${
             isMobileScreen ? 'p-2' : 'p-3'
-          } inline-flex flex-column align-items-center gap-2 card-bg border-round-lg on-click`,
+          } inline-flex flex-column align-items-center gap-2 card-bg border-round-lg on-click px-2 py-3`,
         ]"
         @click="ROUTER.push({ name: app.routeName })"
       >
@@ -41,7 +41,9 @@ onMounted(() => {
           alt="Lỗi ảnh"
           class="w-3rem h-3rem object-fit-cover border-circle"
         />
-        <span>{{ app.name }}</span>
+        <span style="font-size: 0.9rem" class="text-center">{{
+          app.name
+        }}</span>
       </div>
 
       <ApplicationCard
