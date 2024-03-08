@@ -1,11 +1,23 @@
 <script setup>
 import DATA from "@/services/data";
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { isMobileScreen } from "@/utils";
+import { STORE_APPLICATION } from "@/services/stores";
+import ApplicationCard from "./components/ApplicationCard.vue";
 
 const ROUTER = useRouter();
+
+const {
+  onGetterListBotVersatile: listBotVersatile,
+  onActionGetListBotVersatile,
+} = STORE_APPLICATION.StoreApplication();
+
 const listApplication = computed(() => DATA.listApplication);
+
+onMounted(() => {
+  onActionGetListBotVersatile();
+});
 </script>
 
 <template>
@@ -31,6 +43,14 @@ const listApplication = computed(() => DATA.listApplication);
         />
         <span>{{ app.name }}</span>
       </div>
+
+      <ApplicationCard
+        v-for="(app, index) in listBotVersatile"
+        :key="index"
+        :id="app?._id"
+        :image="app?.image"
+        :name="app?.name"
+      />
     </div>
   </div>
 </template>

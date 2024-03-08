@@ -30,7 +30,7 @@ const { onActionGetTopUpHistory } = STORE_MONEY_WALLET.StoreMoneyWallet();
 const isShowHeader = computed(
   () =>
     ROUTE.fullPath.split("/").includes("app") &&
-    +ROUTE.fullPath.split("/").length > 3
+    +ROUTE.fullPath.split("/").length > 2
 );
 
 onMounted(() => {

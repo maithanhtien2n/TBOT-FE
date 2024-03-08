@@ -1,6 +1,7 @@
 import RoutesVirtualAssistant from "../virtual-assistant/services/routes";
 import RoutesBotImage from "../bot-image/services/routes";
 import RoutesBotAudio from "../bot-audio/services/routes";
+import RoutesBotVersatile from "../bot-versatile/services/routes";
 
 export default [
   {
@@ -9,12 +10,17 @@ export default [
     component: () => import("../Application.vue"),
   },
   {
-    path: "app/detail",
+    path: "app",
     name: "ApplicationDetail",
     component: () => import("../ApplicationDetail.vue"),
     meta: {
       requiresAuth: true,
     },
-    children: [...RoutesVirtualAssistant, ...RoutesBotImage, ...RoutesBotAudio],
+    children: [
+      ...RoutesVirtualAssistant,
+      ...RoutesBotImage,
+      ...RoutesBotAudio,
+      ...RoutesBotVersatile,
+    ],
   },
 ];

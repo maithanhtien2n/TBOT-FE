@@ -1,10 +1,6 @@
 <script setup>
 const props = defineProps({
-  value: {
-    type: Object,
-    required: false,
-    default: () => {},
-  },
+  value: { type: Object, required: false, default: () => {} },
 });
 </script>
 
