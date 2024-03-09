@@ -1,6 +1,9 @@
 <script setup>
 import { computed } from "vue";
-import { isMobileScreen } from "@/utils";
+import { ToastService } from "@/utils/toast";
+import { isMobileScreen, onCopyText } from "@/utils";
+
+const TOAST = ToastService();
 
 const props = defineProps({
   name: { type: String, required: false, default: "" },
@@ -28,6 +31,11 @@ const userChatInfo = computed(() => {
       };
   }
 });
+
+const onClickCopyText = (text) => {
+  onCopyText(text);
+  TOAST.success("Đã sao chép văn bản!");
+};
 </script>
 
 <template>
@@ -67,7 +75,11 @@ const userChatInfo = computed(() => {
           background-color: rgba(0, 255, 98, 0.11);
           padding: 0.5rem 0.8rem;
         "
-        class="inline-block text-800 line-height-3 border-round-3xl"
+        :class="[
+          'inline-block text-800 line-height-3 border-round-3xl',
+          { 'on-click': isMobileScreen },
+        ]"
+        @touchstart="onClickCopyText(content)"
       />
 
       <Skeleton

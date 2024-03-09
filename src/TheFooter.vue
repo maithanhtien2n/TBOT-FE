@@ -19,7 +19,7 @@ const notificationLength = computed(
 const isShowFooter = computed(
   () =>
     ROUTE.fullPath.split("/").includes("app") &&
-    +ROUTE.fullPath.split("/").length > 3
+    +ROUTE.fullPath.split("/").length > 2
 );
 </script>
 

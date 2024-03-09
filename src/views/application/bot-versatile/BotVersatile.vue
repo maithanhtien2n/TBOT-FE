@@ -61,11 +61,16 @@ const onSendMessage = async () => {
     messages.value = [];
   }
 
-  onSetScrollTop();
   isAnswering.value = false;
+  onSetScrollTop();
+
+  setTimeout(() => {
+    isAnswering.value = false;
+  }, 300);
 };
 
 onMounted(async () => {
+  messages.value = [];
   onActionGetVersatile(botVersatileId.value);
 });
 </script>
