@@ -16,6 +16,7 @@ import RoutesNotificationAdmin from "@/admin-views/notification-admin/services/r
 import RoutesTopUpHistoryAdmin from "@/admin-views/topup-history-admin/services/routes";
 import RoutesQuestionAdmin from "@/admin-views/question-admin/services/routes";
 import RoutesDocumentAdmin from "@/admin-views/document-admin/services/routes";
+import RoutesApplicationAdmin from "@/admin-views/application-admin/services/routes";
 
 const routes = [
   {
@@ -47,6 +48,7 @@ const routes = [
       ...RoutesTopUpHistoryAdmin,
       ...RoutesQuestionAdmin,
       ...RoutesDocumentAdmin,
+      ...RoutesApplicationAdmin,
     ],
   },
   {

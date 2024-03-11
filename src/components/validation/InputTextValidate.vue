@@ -37,7 +37,7 @@ const onInputUpdatePassword = (event) => {
   <div :class="['flex flex-column gap-2', props.class]" :style="props.style">
     <label v-show="props.label">
       <span>{{ props.label }}</span>
-      <span v-show="props.inputTextProps.required" class="p-error"> *</span>
+      <span v-show="props.inputTextProps.required" class="p-error">*</span>
     </label>
 
     <div class="flex flex-column gap-1 w-full">

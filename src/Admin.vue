@@ -20,7 +20,6 @@ const routeNameCurrent = computed(() => ROUTE.name);
 
 const onClickMenuItem = (routeName) => {
   ROUTER.push({ name: routeName });
-
   isDisplaySidebarMenu.value = false;
 };
 </script>

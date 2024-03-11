@@ -112,23 +112,25 @@ const onRemove = (v) => {
 </script>
 
 <template>
-  <div :class="['flex flex-column gap-2', props.class]">
+  <div :class="['flex flex-column gap-2']">
     <label v-show="props.label">
       <span>{{ props.label }}</span>
-      <span v-show="props.required" class="p-error"> *</span>
+      <span v-show="props.required" class="p-error">*</span>
     </label>
 
     <div class="flex flex-column gap-1">
       <div
-        :class="{ 'p-disabled': props.disabled }"
-        class="border-1 border-dashed text-main-color border-round-lg overflow-hidden"
+        :class="[
+          'border-1 border-dashed text-main-color border-round-lg overflow-hidden',
+          { 'p-disabled': props.disabled },
+          props.class,
+        ]"
       >
         <!-- Nút upload -->
         <div
           v-if="!value && !isLoading"
           :class="[
-            props.class,
-            'relative flex align-items-center justify-content-center',
+            'w-full h-full relative flex align-items-center justify-content-center',
           ]"
         >
           <i v-if="props.miniSize" class="pi pi-plus" />

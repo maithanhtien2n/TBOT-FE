@@ -16,6 +16,7 @@ export * as STORE_NOTIFICATION_ADMIN from "@/admin-views/notification-admin/serv
 export * as STORE_TOP_UP_HISTORY_ADMIN from "@/admin-views/topup-history-admin/services/store";
 export * as STORE_QUESTION_ADMIN from "@/admin-views/question-admin/services/store";
 export * as STORE_DOCUMENT_ADMIN from "@/admin-views/document-admin/services/store";
+export * as STORE_APPLICATION_ADMIN from "@/admin-views/application-admin/services/store";
 
 export const StoreApp = defineStore("StoreApp", () => {
   // Các hàm khác

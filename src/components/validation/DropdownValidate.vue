@@ -33,7 +33,7 @@ const { value, errorMessage, setErrors, setValue } = useField(props.name);
   <div :class="['flex flex-column gap-2', props.class]" :style="props.style">
     <label>
       <span>{{ props.label }}</span>
-      <span v-show="props.dropdownProps.required" class="p-error"> *</span>
+      <span v-show="props.dropdownProps.required" class="p-error">*</span>
     </label>
 
     <div class="flex flex-column gap-1 w-full">

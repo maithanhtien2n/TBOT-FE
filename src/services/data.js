@@ -100,6 +100,11 @@ export default {
       routeName: "AccountAdmin",
     },
     {
+      name: "Ứng dụng",
+      icon: "pi-th-large",
+      routeName: "ApplicationAdmin",
+    },
+    {
       name: "Thông báo",
       icon: "pi-bell",
       routeName: "NotificationAdmin",

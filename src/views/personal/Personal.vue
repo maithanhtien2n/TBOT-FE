@@ -102,7 +102,7 @@ onMounted(() => {
   <div class="flex h-full flex-column gap-3">
     <IconTitle icon="pi pi-user" title="Thông tin tài khoản" />
 
-    <div class="card-bg flex-1 flex flex-wrap-reverse gap-6 pb-5">
+    <div class="card-bg flex-1 flex flex-wrap-reverse gap-3 pb-5">
       <div style="max-width: 25rem" class="flex-1 flex flex-column gap-3">
         <InputTextValidate label="Họ và tên" name="fullName" class="w-full" />
 

@@ -16,6 +16,7 @@ export * as API_NOTIFICATION_ADMIN from "@/admin-views/notification-admin/servic
 export * as API_TOP_UP_HISTORY_ADMIN from "@/admin-views/topup-history-admin/services/api";
 export * as API_QUESTION_ADMIN from "@/admin-views/question-admin/services/api";
 export * as API_DOCUMENT_ADMIN from "@/admin-views/document-admin/services/api";
+export * as API_APPLICATION_ADMIN from "@/admin-views/application-admin/services/api";
 
 class ApiApp {
   onApiLoginAccount = async (args) => {
