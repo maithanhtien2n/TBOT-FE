@@ -279,10 +279,18 @@ onMounted(() => {
           />
 
           <Column
+            field="type"
+            header="Loại phản hồi"
+            headerClass="white-space-nowrap"
+            style="width: 7rem"
+            :sortable="true"
+          />
+
+          <Column
             field="content"
             header="Nội dung đào tạo"
             bodyClass="line-height-2"
-            style="width: 13rem"
+            style="width: 17rem"
             :sortable="true"
           >
             <template #body="{ data }">

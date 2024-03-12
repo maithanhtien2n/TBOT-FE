@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import { useField, useForm } from "vee-validate";
 import { reactive, ref, watch } from "vue";
 import ImageValidate from "@/components/validation/ImageValidate.vue";
+import DropdownValidate from "@/components/validation/DropdownValidate.vue";
 import InputTextValidate from "@/components/validation/InputTextValidate.vue";
 
 const props = defineProps({
@@ -16,6 +17,7 @@ const isOpenDialog = ref(false);
 const formData = reactive({
   image: null,
   name: "",
+  type: "TEXT",
   content: "",
   message: "",
   placeholder: "",
@@ -24,6 +26,7 @@ const formData = reactive({
 const schema = Yup.object({
   image: Yup.object().required("Vui lòng nhập ảnh"),
   name: Yup.string().required("Vui lòng nhập tên ứng dụng"),
+  type: Yup.string().required("Vui lòng chọn loại phản hồi"),
   content: Yup.string().required("Vui lòng nhập nội dung đào tạo"),
   message: Yup.string().required("Vui lòng nhập thông điệp"),
   placeholder: Yup.string().required("Vui lòng nhập gợi ý nhập"),
@@ -74,7 +77,7 @@ watch(isOpenDialog, (isOpenDialog) => {
         });
       }
     } else {
-      resetForm({ values: {}, errors: null });
+      resetForm({ values: { type: "TEXT" }, errors: null });
     }
   }
 });
@@ -99,6 +102,15 @@ watch(isOpenDialog, (isOpenDialog) => {
       <ImageValidate label="Ảnh" name="image" class="image w-7rem h-7rem" />
 
       <InputTextValidate label="Tên ứng dụng" name="name" class="w-full" />
+
+      <DropdownValidate
+        label="Loại phản hồi"
+        name="type"
+        :options="[
+          { name: 'Văn bản', code: 'TEXT' },
+          { name: 'Âm thanh', code: 'AUDIO' },
+        ]"
+      />
 
       <InputTextValidate label="Thông diệp" name="message" class="w-full" />
 
