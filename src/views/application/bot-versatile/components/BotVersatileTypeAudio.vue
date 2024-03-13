@@ -55,7 +55,11 @@ const onSend = async (audioBase64) => {
 
 const onUploadFile = async (event) => {
   const fileType = ["mp3", "wav"];
-  if (!fileType.includes(event.target.files[0].name.split(".").pop())) {
+  if (
+    !fileType.T.includes(
+      event.target.files[0].name.split(".").pop().toLowerCase()
+    )
+  ) {
     fileError.value = `Chỉ hỗ trợ tệp có đuôi: ${fileType.join(", ")}`;
     return;
   }
@@ -88,7 +92,7 @@ const startRecording = async () => {
     };
 
     mediaRecorder.onstop = async () => {
-      const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
+      const audioBlob = new Blob(audioChunks, { type: "audio/WAV" });
       const audioBase64 = await blobToBase64(URL.createObjectURL(audioBlob));
       onSend(audioBase64);
     };
