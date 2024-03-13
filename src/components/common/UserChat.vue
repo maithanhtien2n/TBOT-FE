@@ -10,6 +10,7 @@ const props = defineProps({
   content: { type: String, required: false, default: "" },
   role: { type: String, required: false, default: "" },
   createdAt: { type: String, required: false, default: "" },
+  autoplay: { type: Boolean, required: false, default: false },
 });
 
 const userChatInfo = computed(() => {
@@ -58,6 +59,7 @@ const onClickCopyText = (text) => {
     <div v-if="typeof content === 'string'" class="mt-2">
       <audio
         controls
+        :autoplay="autoplay"
         v-if="content.split('$')[1] === 'speech.mp3'"
         :style="{ width: `${isMobileScreen ? '100%' : '70%'}` }"
       >

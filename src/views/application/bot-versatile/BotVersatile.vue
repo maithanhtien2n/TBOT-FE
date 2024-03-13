@@ -8,12 +8,16 @@ import BotVersatileTypeAudio from "./components/BotVersatileTypeAudio.vue";
 const ROUTE = useRoute();
 const ROUTER = useRouter();
 
-const { onGetterBotVersatile: botVersatile, onActionGetVersatile } =
-  STORE_APPLICATION.STORE_BOT_VERSATILE.StoreBotVersatile();
+const {
+  onGetterMessages: messages,
+  onGetterBotVersatile: botVersatile,
+  onActionGetVersatile,
+} = STORE_APPLICATION.STORE_BOT_VERSATILE.StoreBotVersatile();
 
 const botVersatileId = computed(() => ROUTE.params.id);
 
 onMounted(async () => {
+  messages.value = [];
   onActionGetVersatile(botVersatileId.value);
 });
 </script>

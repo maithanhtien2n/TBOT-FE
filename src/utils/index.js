@@ -154,7 +154,7 @@ const isValidName = (name) => {
   return nameRegex.test(name);
 };
 
-const onRenderStringBase64 = (file) => {
+const onRenderStringBase64 = (file, custom = true) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -168,7 +168,7 @@ const onRenderStringBase64 = (file) => {
 
       const fileBase64 = {
         name: fileNameLowercaseWithoutAccents,
-        base64: reader.result.split(",")[1],
+        base64: custom ? reader.result.split(",")[1] : reader.result,
       };
       resolve(fileBase64);
     };
@@ -299,50 +299,14 @@ const isValidDateOfBirth = (input) => {
   return isValidDate;
 };
 
-const convertAudioToText = (blob) => {
-  // Tạo một URL cho blob âm thanh
-  const blobUrl = URL.createObjectURL(blob);
-
-  // Tạo một instance của SpeechRecognition
-  const recognition = new webkitSpeechRecognition(); // Đối với trình duyệt Chrome
-  // const recognition = new SpeechRecognition(); // Đối với trình duyệt hỗ trợ API
-
-  // Thiết lập các thuộc tính của recognition
-  recognition.lang = "vi-VN"; // Thiết lập ngôn ngữ cho nhận dạng (ví dụ: tiếng Việt)
-  recognition.interimResults = false; // Tắt kết quả tạm thời
-
-  // Khai báo một promise để xử lý kết quả
+const blobToBase64 = async (blobUrl) => {
+  const response = await fetch(blobUrl);
+  const blob = await response.blob();
   return new Promise((resolve, reject) => {
-    // Xử lý sự kiện khi nhận dạng hoàn thành
-    recognition.onresult = (event) => {
-      // Lấy ra kết quả từ sự kiện
-      const result = event.results[0][0].transcript;
-      // Giải phóng URL của blob âm thanh
-      URL.revokeObjectURL(blobUrl);
-      // Trả về kết quả
-      resolve(result);
-    };
-
-    // Xử lý sự kiện khi có lỗi
-    recognition.onerror = (event) => {
-      // Báo lỗi
-      reject(event.error);
-    };
-
-    // Chuyển đổi blob âm thanh thành URL và bắt đầu nhận dạng
-    recognition.start();
-    recognition.onend = () => {
-      recognition.stop();
-    };
-    recognition.onaudiostart = () => {
-      recognition.stop();
-    };
-    recognition.onaudioend = () => {
-      recognition.stop();
-    };
-
-    // Đặt URL của blob âm thanh cho recognition để bắt đầu nhận dạng
-    recognition.src = blobUrl;
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
   });
 };
 
@@ -352,6 +316,7 @@ export {
   formatDate,
   isValidName,
   formatToVND,
+  blobToBase64,
   isValidEmail,
   isValidBase64,
   isValidFormat,
@@ -360,7 +325,6 @@ export {
   onEncryptedData,
   formatNumberIntl,
   formatDateToDDMMYY,
-  convertAudioToText,
   onValidAccountName,
   isValidDateOfBirth,
   isValidPhoneNumber,
