@@ -96,7 +96,7 @@ const onClickCopyText = (text) => {
         <div
           v-for="(img, index) in content"
           :key="index"
-          class="relative w-10rem h-8rem border-round-lg overflow-hidden box-shadow-1"
+          class="relative w-23rem h-17rem border-round-lg overflow-hidden box-shadow-1"
         >
           <img
             :src="img.url"
@@ -128,8 +128,7 @@ const onClickCopyText = (text) => {
       </div>
 
       <div v-else class="flex gap-3">
-        <Skeleton class="w-10rem h-8rem border-round-lg" />
-        <Skeleton class="w-10rem h-8rem border-round-lg" />
+        <Skeleton class="max-w-23rem h-17rem border-round-lg" />
       </div>
     </div>
   </div>
