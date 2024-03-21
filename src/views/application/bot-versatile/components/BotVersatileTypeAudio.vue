@@ -32,7 +32,6 @@ const onSend = async (audioBase64) => {
   messages.value.push({ role: "user", content: audioBase64 });
 
   const res = await onActionSendMessage({
-    typeResponse: "audio",
     botVersatileId: botVersatileId.value,
     messages: messages.value.map(({ role, content }) => ({
       role,
@@ -46,7 +45,6 @@ const onSend = async (audioBase64) => {
       messages.value.push(item.result);
     });
 
-    console.log(messages.value);
     socket.emit("isNewData", "Dữ liệu mới");
   } else {
     messages.value = [];

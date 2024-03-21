@@ -27,8 +27,9 @@ onMounted(async () => {
     <ButtonBack @onBack="ROUTER.push({ name: 'Application' })" />
 
     <BotVersatileTypeText
-      v-if="botVersatile.type === 'TEXT'"
+      v-if="['TEXT', 'VIDEO'].includes(botVersatile.type)"
       :botVersatile="botVersatile"
+      :type="botVersatile.type"
     />
 
     <BotVersatileTypeAudio

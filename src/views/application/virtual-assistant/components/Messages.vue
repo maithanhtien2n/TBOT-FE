@@ -75,9 +75,7 @@ onMounted(() => {
         <UserChat
           v-for="(item, index) in messages"
           :key="index"
-          :image="onReturnInfoUser(item.role).image"
-          :name="onReturnInfoUser(item.role).name"
-          :message="item.content"
+          :value="item"
         />
         <br />
 

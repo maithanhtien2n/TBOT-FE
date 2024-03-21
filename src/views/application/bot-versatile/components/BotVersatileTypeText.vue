@@ -8,6 +8,7 @@ const ROUTE = useRoute();
 
 const props = defineProps({
   botVersatile: { type: Object, required: true },
+  type: { type: String, required: false, default: "TEXT" },
 });
 
 const { onGetterMessages: messages, onActionSendMessage } =
@@ -83,16 +84,9 @@ const onSendMessage = async () => {
       ]"
     >
       <!-- You -->
-      <UserChat
-        v-for="(item, index) in messages"
-        :key="index"
-        :name="item.role"
-        :content="item.content"
-        :role="item.role"
-        :createdAt="item.createdAt"
-      />
+      <UserChat v-for="(item, index) in messages" :key="index" :value="item" />
 
-      <UserChat v-if="isAnswering" role="assistant" />
+      <UserChat v-if="isAnswering" :type="type" />
 
       <div
         v-if="!messages.length"

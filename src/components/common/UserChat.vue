@@ -1,42 +1,51 @@
 <script setup>
 import { computed } from "vue";
 import { ToastService } from "@/utils/toast";
-import { isMobileScreen, onCopyText } from "@/utils";
+import { isMobileScreen, formatDate } from "@/utils";
 
 const TOAST = ToastService();
 
 const props = defineProps({
-  name: { type: String, required: false, default: "" },
-  content: { type: String, required: false, default: "" },
-  role: { type: String, required: false, default: "" },
-  createdAt: { type: String, required: false, default: "" },
+  value: {
+    type: Object,
+    required: false,
+    default: () => {
+      return {
+        role: "",
+        content: "",
+        images: [],
+        video: "",
+        audio: "",
+        createdAt: "",
+      };
+    },
+  },
+  type: { type: String, required: false, default: "CONTENT" },
   autoplay: { type: Boolean, required: false, default: false },
 });
 
 const userChatInfo = computed(() => {
-  switch (props.role) {
+  switch (props.value.role) {
     case "user":
       return {
         avatar: "/images/user.jpg",
         name: "Bạn",
+        createdAt: props.value.createdAt,
       };
     case "assistant":
       return {
         avatar: "/images/botai.webp",
         name: "Trợ lý ảo",
+        createdAt: props.value.createdAt,
       };
     default:
       return {
-        avatar: "/images/avatar.jpg",
-        name: "",
+        avatar: "/images/botai.webp",
+        name: "Trợ lý ảo",
+        createdAt: formatDate(new Date(), true),
       };
   }
 });
-
-const onClickCopyText = (text) => {
-  onCopyText(text);
-  TOAST.success("Đã sao chép văn bản!");
-};
 </script>
 
 <template>
@@ -51,25 +60,15 @@ const onClickCopyText = (text) => {
       <div class="flex flex-column gap-1 w-full">
         <span class="font-bold text-800">{{ userChatInfo.name }}</span>
         <span class="text-custom-mini text-700">
-          {{ createdAt || "đang tải..." }}
+          {{ userChatInfo.createdAt || "đang tải..." }}
         </span>
       </div>
     </div>
 
-    <div v-if="typeof content === 'string'" class="mt-2">
-      <audio
-        controls
-        :autoplay="autoplay"
-        v-if="content.split('$')[1] === 'speech.mp3'"
-        :style="{ width: `${isMobileScreen ? '100%' : '70%'}` }"
-      >
-        <source :src="content" type="audio/mp3" />
-        Your browser does not support the audio element.
-      </audio>
-
+    <div class="mt-2">
       <div
-        v-if="content && content.split('$')[1] !== 'speech.mp3'"
-        v-html="content"
+        v-if="value?.content"
+        v-html="value?.content"
         style="
           text-align: justify;
           white-space: pre-wrap;
@@ -77,24 +76,30 @@ const onClickCopyText = (text) => {
           background-color: rgba(0, 255, 98, 0.11);
           padding: 0.5rem 0.8rem;
         "
-        :class="[
-          'inline-block text-800 line-height-3 border-round-3xl',
-          { 'on-click': isMobileScreen },
-        ]"
-        @touchstart="onClickCopyText(content)"
+        :class="['inline-block text-800 line-height-3 border-round-3xl']"
       />
 
-      <Skeleton
-        v-if="!content"
-        class="w-full mt-2 border-round-3xl"
-        height="4rem"
-      />
-    </div>
+      <div v-if="value?.video" class="mt-2">
+        <video controls class="w-23rem h-17rem border-round-2xl">
+          <source :src="value?.video" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
 
-    <div v-else class="mt-2">
-      <div v-if="content?.length" class="flex gap-3">
+      <audio
+        v-if="value?.audio"
+        controls
+        :autoplay="autoplay"
+        :style="{ width: `${isMobileScreen ? '100%' : '70%'}` }"
+        class="mt-2"
+      >
+        <source :src="value?.audio" type="audio/mp3" />
+        Your browser does not support the audio element.
+      </audio>
+
+      <div v-if="value?.images?.length" class="flex gap-3 mt-2">
         <div
-          v-for="(img, index) in content"
+          v-for="(img, index) in value?.images"
           :key="index"
           class="relative w-23rem h-17rem border-round-lg overflow-hidden box-shadow-1"
         >
@@ -127,9 +132,30 @@ const onClickCopyText = (text) => {
         </div>
       </div>
 
-      <div v-else class="flex gap-3">
+      <div
+        v-if="
+          ['IMAGE', 'VIDEO'].includes(type) &&
+          !value?.content &&
+          !value?.audio &&
+          !value?.video &&
+          !value?.images?.length
+        "
+        class="flex gap-3"
+      >
         <Skeleton class="max-w-23rem h-17rem border-round-lg" />
       </div>
+
+      <Skeleton
+        v-if="
+          ['CONTENT', 'AUDIO'].includes(type) &&
+          !value?.content &&
+          !value?.audio &&
+          !value?.video &&
+          !value?.images?.length
+        "
+        class="w-full mt-2 border-round-3xl"
+        height="4rem"
+      />
     </div>
   </div>
 </template>

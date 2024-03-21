@@ -109,6 +109,7 @@ watch(isOpenDialog, (isOpenDialog) => {
         :options="[
           { name: 'Văn bản', code: 'TEXT' },
           { name: 'Âm thanh', code: 'AUDIO' },
+          { name: 'Video', code: 'VIDEO' },
         ]"
       />
 

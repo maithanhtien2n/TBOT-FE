@@ -119,13 +119,10 @@ onMounted(async () => {
         <UserChat
           v-for="(item, index) in messages"
           :key="index"
-          :name="item.role"
-          :content="item.content"
-          :role="item.role"
-          :createdAt="item.createdAt"
+          :value="item"
         />
 
-        <UserChat v-if="isAnswering" role="assistant" />
+        <UserChat v-if="isAnswering" />
 
         <div
           v-if="!messages.length"
