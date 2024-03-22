@@ -1,19 +1,40 @@
 <script setup>
 import DATA from "@/services/data";
-import { computed, onMounted } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
-import { isMobileScreen } from "@/utils";
-import { STORE_APPLICATION } from "@/services/stores";
+import { STORE_APPLICATION, STORE_PERSONAL } from "@/services/stores";
 import ApplicationCard from "./components/ApplicationCard.vue";
+import {
+  isMobileScreen,
+  userData,
+  appLocalStorage,
+  onEncryptedData,
+} from "@/utils";
 
 const ROUTER = useRouter();
 
 const {
   onGetterListBotVersatile: listBotVersatile,
   onActionGetListBotVersatile,
+  onActionChangeModel,
 } = STORE_APPLICATION.StoreApplication();
 
+const { onActionGetUserInfo } = STORE_PERSONAL.StorePersonal();
+
+const isUpgrade = ref(userData?.value?.isUpgrade);
+
 const listApplication = computed(() => DATA.listApplication);
+
+const onChangeModel = async ({ value }) => {
+  const res = await onActionChangeModel(value);
+  if (res.success) {
+    onActionGetUserInfo(true).then((res) => {
+      if (res.success) {
+        appLocalStorage.value.userData = onEncryptedData(res?.data);
+      }
+    });
+  }
+};
 
 onMounted(() => {
   onActionGetListBotVersatile();
@@ -23,6 +44,18 @@ onMounted(() => {
 <template>
   <div class="flex h-full flex-column gap-3">
     <IconTitle icon="pi pi-th-large" title="Ứng dụng" />
+
+    <SelectButton
+      v-model="isUpgrade"
+      :options="[
+        { name: 'Bản Bình thường', code: false },
+        { name: 'Bản Nâng cấp', code: true },
+      ]"
+      optionLabel="name"
+      optionValue="code"
+      aria-labelledby="basic"
+      @change="onChangeModel"
+    />
 
     <div class="flex gap-3 flex-wrap">
       <div

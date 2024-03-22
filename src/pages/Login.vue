@@ -19,9 +19,7 @@ const formData = reactive({
 });
 
 const schema = Yup.object({
-  email: Yup.string()
-    .test("email", "Email của bạn không hợp lệ", (v) => isValidEmail(v))
-    .required("Vui lòng nhập email của bạn"),
+  email: Yup.string().required("Vui lòng nhập email của bạn"),
   password: Yup.string().required("Vui lòng nhập mật khẩu"),
 });
 

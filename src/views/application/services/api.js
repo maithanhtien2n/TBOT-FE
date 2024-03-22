@@ -9,7 +9,15 @@ class ApiApplication {
   getListBotVersatile = async () => {
     return await AxiosInstance({
       method: "PUT",
-      url: "bot-versatile/dropdown",
+      url: "common/bot-versatile",
+    });
+  };
+
+  changeModel = async (isUpgrade) => {
+    return await AxiosInstance({
+      method: "PUT",
+      url: "user/change-model",
+      params: { isUpgrade },
     });
   };
 }

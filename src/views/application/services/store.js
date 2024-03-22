@@ -26,11 +26,17 @@ export const StoreApplication = defineStore("StoreApplication", () => {
     return res;
   };
 
+  const onActionChangeModel = async (params) => {
+    const res = await onResponse(API.changeModel(params));
+    return res;
+  };
+
   return {
     // Getter
     onGetterListBotVersatile,
 
     // Action
     onActionGetListBotVersatile,
+    onActionChangeModel,
   };
 });

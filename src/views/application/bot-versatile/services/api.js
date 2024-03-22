@@ -4,7 +4,7 @@ class ApiBotVersatile {
   getVersatile = async (id) => {
     return await AxiosInstance({
       method: "PUT",
-      url: `bot-versatile/detail`,
+      url: `common/bot-versatile-detail`,
       params: { id },
     });
   };
