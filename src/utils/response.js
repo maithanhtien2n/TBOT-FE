@@ -22,10 +22,12 @@ export const Utils = () => {
           }
         })
         .catch((error) => {
-          if (error.response) {
-            results = error.response.data;
-            if (!["ERROR_BALANCE"].includes(error.response.data.statusCode)) {
-              TOAST.error(error.response.data.statusValue);
+          if (error?.response) {
+            results = error?.response?.data;
+            if (
+              !["ERROR_BALANCE"].includes(error?.response?.data?.statusCode)
+            ) {
+              TOAST.error(error?.response?.data?.statusValue);
             }
 
             return;
