@@ -80,7 +80,7 @@ const userChatInfo = computed(() => {
       />
 
       <div v-if="value?.video" class="mt-2">
-        <video controls class="w-23rem h-17rem border-round-2xl">
+        <video controls class="w-23rem h-14rem border-round-2xl box-shadow-1">
           <source :src="value?.video" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
@@ -101,12 +101,13 @@ const userChatInfo = computed(() => {
         <div
           v-for="(img, index) in value?.images"
           :key="index"
-          class="relative w-23rem h-17rem border-round-lg overflow-hidden box-shadow-1"
+          class="relative w-23rem h-14rem border-round-lg overflow-hidden box-shadow-1"
         >
           <img
             :src="img.url"
             onerror="this.onerror=null; this.src='/images/image-product-default.svg';"
-            class="w-full h-full object-fit-cover"
+            style="object-fit: contain"
+            class="w-full h-full"
           />
 
           <div
@@ -142,7 +143,7 @@ const userChatInfo = computed(() => {
         "
         class="flex gap-3"
       >
-        <Skeleton class="max-w-23rem h-17rem border-round-lg" />
+        <Skeleton class="max-w-23rem h-14rem border-round-lg" />
       </div>
 
       <Skeleton
